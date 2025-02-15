@@ -1,8 +1,6 @@
 import sys
 import os
 
-from inference import DEVICE
-
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -16,7 +14,7 @@ from inference_vision import OmniVisionInference
 
 class OmniChatServer(object):
     def __init__(self, ip='0.0.0.0', port=60808, run_app=True,
-                 ckpt_dir='./checkpoint', device=DEVICE) -> None:
+                 ckpt_dir='./checkpoint', device='cuda:0') -> None:
         server = Flask(__name__)
         # CORS(server, resources=r"/*")
         # server.config["JSON_AS_ASCII"] = False
@@ -87,7 +85,7 @@ def create_app():
     return server.server
 
 
-def serve(ip='0.0.0.0', port=60808, device=DEVICE):
+def serve(ip='0.0.0.0', port=60808, device='cuda:0'):
 
     OmniChatServer(ip, port=port,run_app=True, device=device)
 

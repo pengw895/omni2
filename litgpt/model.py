@@ -225,7 +225,7 @@ class GPT(nn.Module):
         return cls(Config.from_name(name, **kwargs))
 
     def rope_cache(
-        self, device: Optional[torch.device] = "cpu"
+        self, device: Optional[torch.device] = None
     ) -> Tuple[torch.Tensor, torch.Tensor]:
         return build_rope_cache(
             seq_len=self.max_seq_length,
@@ -239,7 +239,7 @@ class GPT(nn.Module):
         self,
         batch_size: int,
         rope_cache_length: Optional[int] = None,
-        device: Optional[torch.device] = "cpu",
+        device: Optional[torch.device] = None,
         dtype: Optional[torch.dtype] = None,
     ) -> None:
         if rope_cache_length is None:
@@ -437,7 +437,7 @@ class CausalSelfAttention(nn.Module):
         batch_size: int,
         max_seq_length: int,
         rope_cache_length: Optional[int] = None,
-        device: Optional[torch.device] = "cpu",
+        device: Optional[torch.device] = None,
         dtype: Optional[torch.dtype] = None,
     ) -> "KVCache":
         heads = 1 if self.config.n_query_groups == 1 else self.config.n_head
@@ -551,7 +551,7 @@ class LLaMAMoE(nn.Module):
 def build_rope_cache(
     seq_len: int,
     n_elem: int,
-    device: Optional[torch.device] = "cpu",
+    device: Optional[torch.device] = None,
     base: int = 10000,
     condense_ratio: int = 1,
 ) -> Tuple[torch.Tensor, torch.Tensor]:
@@ -587,7 +587,7 @@ class KVCache(nn.Module):
         self,
         k_shape: Tuple[int, int, int, int],
         v_shape: Tuple[int, int, int, int],
-        device: Optional[torch.device] = "cpu",
+        device: Optional[torch.device] = None,
         dtype: Optional[torch.dtype] = None,
     ) -> None:
         super().__init__()
@@ -615,7 +615,7 @@ class KVCache(nn.Module):
 
 
 def build_mask_cache(
-    max_seq_length: int, device: Optional[torch.device] = "cpu"
+    max_seq_length: int, device: Optional[torch.device] = None
 ) -> torch.Tensor:
     ones = torch.ones((max_seq_length, max_seq_length), device=device, dtype=torch.bool)
     return torch.tril(ones).unsqueeze(0).unsqueeze(0)

@@ -220,7 +220,7 @@ def recording(status):
 
     while st.session_state.recording:
         status.success("Listening...")
-        audio_bytes = stream.read(IN_CHUNK, exception_on_overflow = False)
+        audio_bytes = stream.read(IN_CHUNK)
         temp_audio += audio_bytes
 
         if len(temp_audio) > IN_SAMPLE_WIDTH * IN_RATE * IN_CHANNELS * VAD_STRIDE:

@@ -98,7 +98,7 @@ class Tokenizer:
     def encode(
         self,
         string: str,
-        device: Optional[torch.device] = "cpu",
+        device: Optional[torch.device] = None,
         bos: Optional[bool] = None,
         eos: bool = False,
         max_length: int = -1,

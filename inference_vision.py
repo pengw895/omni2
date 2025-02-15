@@ -7,7 +7,7 @@ from utils.snac_utils import get_snac, generate_audio_data
 import clip
 import inference
 from tqdm import tqdm
-from inference import OmniInference, load_model, load_audio, download_model, DEVICE
+from inference import OmniInference, load_model, load_audio, download_model
 from inference import text_vocabsize, padded_text_vocabsize, get_text_stream
 from PIL import Image
 
@@ -75,7 +75,7 @@ def load_clip_model(ckpt_dir, device):
     
 class OmniVisionInference(OmniInference):
 
-    def __init__(self, ckpt_dir='./checkpoint', device=DEVICE):
+    def __init__(self, ckpt_dir='./checkpoint', device='cuda:0'):
         self.device = device
         if not os.path.exists(ckpt_dir):
             print(f"checkpoint directory {ckpt_dir} not found, downloading from huggingface")

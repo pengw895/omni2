@@ -14,9 +14,8 @@ API_URL = os.getenv("API_URL", None)
 client = None
 
 if API_URL is None:
-    from inference import OmniInference, DEVICE
-
-    omni_client = OmniInference('./checkpoint', DEVICE)
+    from inference import OmniInference
+    omni_client = OmniInference('./checkpoint', 'cuda:0')
     omni_client.warm_up()
 
 

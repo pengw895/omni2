@@ -27,7 +27,6 @@ from tqdm import tqdm
 from huggingface_hub import snapshot_download
 
 
-DEVICE="cpu"
 torch.set_printoptions(sci_mode=False)
 
 
@@ -392,7 +391,7 @@ def get_text_stream(list_output, index, text_tokenizer):
     
 class OmniInference:
 
-    def __init__(self, ckpt_dir='./checkpoint', device=DEVICE):
+    def __init__(self, ckpt_dir='./checkpoint', device='cuda:0'):
         self.device = device
         if not os.path.exists(ckpt_dir):
             print(f"checkpoint directory {ckpt_dir} not found, downloading from huggingface")
@@ -546,7 +545,7 @@ class OmniInference:
 
 
 def test_infer():
-    device = DEVICE
+    device = "cuda:0"
     out_dir = f"./output/{get_time_str()}"
     ckpt_dir = f"./checkpoint"
     if not os.path.exists(ckpt_dir):
